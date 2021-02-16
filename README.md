@@ -1,23 +1,50 @@
 # How to reproduce issue
 
-- I've added my additional fern configurations in the case that they may be causing the issue.
+1. Install vim-plug:
+    ```
+    sh -c 'curl -fLo "${XDG_DATA_HOME:-$HOME/.local/share}"/nvim/site/autoload/plug.vim --create-dirs \
+       https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
+    ```
 
-1. Clone init.
+2. launch nvim: 
+    ```
+    nvim
+    ```
 
-2. Run `nvim` and open any file. `README.md` in the repo can work.
+3. Toggle fern into the screen:
+    ```
+    :Fern . -drawer -toggle
+    ```
 
-3. Press `\f` or `<Leader>f` to toggle fern window out and visable.
+4. Make session that will error:
+    ```
+    :mksession fern_opened.vim
+    ```
 
-4. Make your session that will provide error: `mksession openedFern.vim`.
+5. Makes session that will not error:
+    ```
+    :Fern . -drawer -toggle
+    ```
+    ```
+    :mksession fern_closed.vim
+    ```
 
-5. Press `\f` or `<Leader>f` to toggle fern window away.
+6. Close nvim: 
+    ```
+    :q
+    ```
 
-6. Make your session which won't provide an error: `mksession closedFern.vim`.
+7. Open nvim:
+    ```
+    nvim
+    ```
 
-7. Close nvim to start fresh.
+8. Load session that won't show error:
+    ```
+    :source fern_closed.vim
+    ```
 
-8. Run `nvim`
-
-9. Run `Source openedFern.vim` - you should get an error.
-
-10. Run `Source closedFern.vim` - you shouldn't get an error.
+9. Load session that will error:
+    ```
+    :source fern_opened.vim
+    ```
